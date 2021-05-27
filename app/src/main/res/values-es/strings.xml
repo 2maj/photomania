@@ -13,4 +13,7 @@
     <string name="str_galerie">Galería</string>
     <string name="pic_btn">pic</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="longitude">Longitud</string>
+    <string name="latitude">Latitud</string>
+    <string name="Trouver">Encontrar</string>
 </resources>

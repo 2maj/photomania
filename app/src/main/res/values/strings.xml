@@ -13,4 +13,8 @@
     <string name="action_map">Cartes</string>
     <string name="title_activity_maps">Carte</string>
     <string name="description">Description</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="Trouver">Trouver</string>
+
 </resources>

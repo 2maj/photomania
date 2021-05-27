@@ -20,7 +20,7 @@ android:layout_height="match_parent">
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="lat" />
+                android:text="@string/latitude" />
 
             <EditText
                 android:id="@+id/longitude"
@@ -28,7 +28,7 @@ android:layout_height="match_parent">
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="lon" />
+                android:text="@string/longitude" />
 
             <Button
                 android:id="@+id/btn_location"
@@ -36,7 +36,7 @@ android:layout_height="match_parent">
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:text="Find" />
+                android:text="@string/Trouver" />
 
         </LinearLayout>
 
