@@ -95,7 +95,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 LatLng latLng = new LatLng(latitude, longitude);
                 System.out.println(latLng);
 
-                marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in current location"));
+                marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Latitude : " + latitude + " Longitude : " + longitude  ));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             }
         };
