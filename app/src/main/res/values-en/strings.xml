@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">photomania</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="description">Description</string>
+    <string name="action_map">Maps</string>
+    <string name="write">Write</string>
+    <string name="read">Read</string>
+    <string name="enregistrer_photo">Save pic</string>
+    <string name="prendre_photo">Take pic</string>
+    <string name="str_map">Map</string>
+    <string name="str_photo">Picture</string>
+    <string name="str_galerie">Gallery</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pic_btn">pic</string>
+</resources>
