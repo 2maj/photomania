@@ -60,6 +60,8 @@ public class GalerieFragment extends Fragment {
                 String[] projection = {
                         BaseColumns._ID,
                         SQLContract.Entry.COLUMN_PHOTO_PATH,
+                        SQLContract.Entry.COLUMN_PHOTO_LAT,
+                        SQLContract.Entry.COLUMN_PHOTO_LON,
                         SQLContract.Entry.COLUMN_DESCRIPTION
                 };
 
@@ -91,14 +93,17 @@ public class GalerieFragment extends Fragment {
 
                 while (cursor.moveToNext()) {
                     final long id = cursor.getLong(cursor.getColumnIndex(SQLContract.Entry._ID));
-                    final String nm = cursor.getString(cursor.getColumnIndex(SQLContract.Entry.COLUMN_PHOTO_PATH));
-                    final String snm = cursor.getString(cursor.getColumnIndex(SQLContract.Entry.COLUMN_DESCRIPTION));
+                    final String photo_path = cursor.getString(cursor.getColumnIndex(SQLContract.Entry.COLUMN_PHOTO_PATH));
+                    final String lat = cursor.getString(cursor.getColumnIndex(SQLContract.Entry.COLUMN_PHOTO_LAT));
+                    final String lon = cursor.getString(cursor.getColumnIndex(SQLContract.Entry.COLUMN_PHOTO_LON));
+                    final String description = cursor.getString(cursor.getColumnIndex(SQLContract.Entry.COLUMN_DESCRIPTION));
+
 
                     // display it
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            t.append(String.valueOf(id) + " : " + nm + " " + snm + "\n");
+                            t.append(String.valueOf(id) + " : " + photo_path + " | " + lat + ", "+ lon + "|" + description + "\n");
                         }
                     });
                 }

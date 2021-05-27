@@ -1,6 +1,7 @@
 package fr.android.photomania;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,10 +9,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +26,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +60,11 @@ public class PhotoFragment extends Fragment {
     private TextView descriptionPhoto;
     private MySQLHelper dbHelper;
 
+    private double latitude, longitude;
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback locationCallback;
+    private LocationRequest locationRequest;
+
     public PhotoFragment(String name) {
         dbName = name;
         Bundle b = new Bundle();
@@ -62,6 +80,7 @@ public class PhotoFragment extends Fragment {
 
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         btn_take = (Button) view.findViewById(R.id.btn_take);
@@ -74,6 +93,32 @@ public class PhotoFragment extends Fragment {
         btn_take.setOnClickListener(takePicture);
         // instantiate the helper object to access the database
         dbHelper = new MySQLHelper(getContext(), dbName);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(PhotoFragment.this.getActivity());
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(500);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+
+                Log.d("FUSED", "New location");
+                // get the latest location available
+                Location location = locationResult.getLastLocation();
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+
+                LatLng latLng = new LatLng(latitude, longitude);
+                System.out.println(latLng);
+
+            }
+        };
     }
 
     @Override
@@ -89,11 +134,11 @@ public class PhotoFragment extends Fragment {
             String textDescription = descriptionPhoto.getText().toString();
             System.out.println("Description : "+textDescription);
             MediaStore.Images.Media.insertImage(getContext().getContentResolver(), image, "Image save", textDescription);
-            write(photopath, textDescription);
+            write(photopath, latitude, longitude, textDescription);
         }
     };
 
-    public void write(String photopath, String description) {
+    public void write(String photopath, Double lat, Double lon, String description) {
         // write two (key, value) pairs
         // Gets the data repository in write mode
 
@@ -106,6 +151,8 @@ public class PhotoFragment extends Fragment {
                 // Create a new map of values, where column names are the keys
                 ContentValues values = new ContentValues();
                 values.put(SQLContract.Entry.COLUMN_PHOTO_PATH, photopath);
+                values.put(SQLContract.Entry.COLUMN_PHOTO_LAT, String.valueOf(lat));
+                values.put(SQLContract.Entry.COLUMN_PHOTO_LON, String.valueOf(lon));
                 values.put(SQLContract.Entry.COLUMN_DESCRIPTION, description);
 
                 // Insert the new row, returning the primary key value of the new row
@@ -165,9 +212,17 @@ public class PhotoFragment extends Fragment {
         return c; // returns null if camera is unavailable
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onResume() {
         super.onResume();
+        if (ActivityCompat.checkSelfPermission(PhotoFragment.this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            requestLocationUpdates();
+        else {
+            String[] perms = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+            ActivityCompat.requestPermissions(PhotoFragment.this.getActivity(), perms, PERM_REQUEST);
+        }
 
         // check permissions before registering
         if (ActivityCompat.checkSelfPermission(PhotoFragment.this.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
@@ -181,11 +236,30 @@ public class PhotoFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    @SuppressLint("MissingPermission")
+    private void requestLocationUpdates() {
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(PhotoFragment.this.getActivity().getMainExecutor(), location -> {
+                    // Got last known location. In some rare situations this can be null.
+
+                    if (location != null) {
+                        Log.d("FUSED", "Latest location found");
+                        // Logic to handle location object
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    } else
+                        Log.d("FUSED", "Last Location unsuccessful");
+                });
+
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper());
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        askedOnce = true;
 
         if (requestCode == PERM_REQUEST) {
             // check grantResults
@@ -196,5 +270,6 @@ public class PhotoFragment extends Fragment {
         }
 
     }
+
 
 }
