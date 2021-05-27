@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">photomania</string>
+    <string name="pic_btn">pic</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_galerie">Galerie</string>
+    <string name="str_photo">Photo</string>
+    <string name="str_map">Map</string>
+    <string name="prendre_photo">Prendre photo</string>
+    <string name="enregistrer_photo">Enregistrer photo</string>
+    <string name="read">Read</string>
+    <string name="write">Write</string>
+    <string name="action_map">Maps</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="description">Description</string>
+</resources>

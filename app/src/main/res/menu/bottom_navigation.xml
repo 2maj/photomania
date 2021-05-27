@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_galery"
+        android:icon="@drawable/ic_baseline_photo_library_24"
+        android:title="@string/str_galerie" />
+    <item
+        android:id="@+id/nav_photo"
+        android:icon="@drawable/ic_baseline_photo_camera_24"
+        android:title="@string/str_photo" />
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/str_map" />
+</menu>
