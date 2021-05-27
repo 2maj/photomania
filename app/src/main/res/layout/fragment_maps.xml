@@ -16,23 +16,23 @@ android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/latitude"
-                android:layout_width="150dp"
+                android:layout_width="125dp"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/latitude" />
+                android:hint="@string/latitude"
+                android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/longitude"
-                android:layout_width="150dp"
+                android:layout_width="125dp"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/longitude" />
+                android:hint="@string/longitude"
+                android:inputType="numberDecimal" />
 
             <Button
                 android:id="@+id/btn_location"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clickable="true"

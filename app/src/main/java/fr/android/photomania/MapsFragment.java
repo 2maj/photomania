@@ -93,8 +93,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 longitude = location.getLongitude();
 
                 LatLng latLng = new LatLng(latitude, longitude);
-                System.out.println(latLng);
+                //System.out.println(latLng);
 
+                System.out.println("** lat : " + latitude);
                 marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Latitude : " + latitude + " Longitude : " + longitude  ));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             }
@@ -111,7 +112,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
             LatLng latLng = new LatLng(latitude, longitude);
 
-            marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Marker manuel location"));
+            marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Latitude : " + latitude + " Longitude : " + longitude  ));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     };
