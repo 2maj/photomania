@@ -9,6 +9,8 @@ public class MySQLHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SQLContract.Entry.TABLE_NAME + " (" +
                     SQLContract.Entry._ID + " INTEGER PRIMARY KEY," +
                     SQLContract.Entry.COLUMN_PHOTO_PATH + " TEXT," +
+                    SQLContract.Entry.COLUMN_PHOTO_LAT + " TEXT," +
+                    SQLContract.Entry.COLUMN_PHOTO_LON + " TEXT," +
                     SQLContract.Entry.COLUMN_DESCRIPTION + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -16,7 +18,7 @@ public class MySQLHelper extends SQLiteOpenHelper {
 
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static String DATABASE_NAME;
 
     public MySQLHelper(Context context, String dbName) {
