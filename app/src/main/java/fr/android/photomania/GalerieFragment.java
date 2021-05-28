@@ -54,25 +54,6 @@ public class GalerieFragment extends Fragment {
             @Override
             public void run() {
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-// Define a projection that specifies which columns from the database
-// you will actually use after this query.
-                String[] projection = {
-                        BaseColumns._ID,
-                        SQLContract.Entry.COLUMN_PHOTO_PATH,
-                        SQLContract.Entry.COLUMN_PHOTO_LAT,
-                        SQLContract.Entry.COLUMN_PHOTO_LON,
-                        SQLContract.Entry.COLUMN_DESCRIPTION
-                };
-
-// Filter results WHERE "title" = 'My Title'
-                String selection = SQLContract.Entry.COLUMN_PHOTO_PATH + " = ?";
-                String[] selectionArgs = {"My Title"};
-
-// How you want the results sorted in the resulting Cursor
-                String sortOrder =
-                        SQLContract.Entry.COLUMN_DESCRIPTION + " DESC";
-
                 Cursor cursor = db.query(
                         SQLContract.Entry.TABLE_NAME,   // The table to query
                         null,             // The array of columns to return (pass null to get all)
