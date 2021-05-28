@@ -135,6 +135,9 @@ public class PhotoFragment extends Fragment {
             System.out.println("Description : "+textDescription);
             MediaStore.Images.Media.insertImage(getContext().getContentResolver(), image, "Image save", textDescription);
             write(photopath, latitude, longitude, textDescription);
+            Intent returnBtn = new Intent(getContext(),
+                    MainActivity.class);
+            startActivity(returnBtn);
         }
     };
 
