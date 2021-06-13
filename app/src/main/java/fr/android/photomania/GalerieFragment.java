@@ -54,12 +54,6 @@ public class GalerieFragment extends Fragment {
             @Override
             public void run() {
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-// Define a projection that specifies which columns from the database
-// you will actually use after this query.
-
-// How you want the results sorted in the resulting Cursor
-
                 Cursor cursor = db.query(
                         SQLContract.Entry.TABLE_NAME,   // The table to query
                         null,             // The array of columns to return (pass null to get all)

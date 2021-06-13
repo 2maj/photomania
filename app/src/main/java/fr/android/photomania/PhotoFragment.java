@@ -157,6 +157,9 @@ public class PhotoFragment extends Fragment {
                 values.put(SQLContract.Entry.COLUMN_PHOTO_LAT, String.valueOf(lat));
                 values.put(SQLContract.Entry.COLUMN_PHOTO_LON, String.valueOf(lon));
                 values.put(SQLContract.Entry.COLUMN_DESCRIPTION, description);
+
+                // Insert the new row, returning the primary key value of the new row
+                long newRowId = db.insert(SQLContract.Entry.TABLE_NAME, null, values);
             }
         }).start();
     }
